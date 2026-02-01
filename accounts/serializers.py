@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
-from .models import User
+from .models import User , UserAddress
 from django.core import exceptions
 
 class RegisterUserSerializer(serializers.ModelSerializer):
@@ -93,6 +93,26 @@ class UpdateUserInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = User 
         fields = ["first_name", "last_name"]
+        
+
+class UserSerialzier(serializers.ModelSerializer):
+    class Meta:
+        model = User 
+        fields = ["id","email","username","first_name","last_name",]
+        
+        
+class UserAddressSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    
+    class Meta:
+        model = UserAddress
+        fields = ["id","address","zip_code"]
+        
+    
+    def create(self, validated_data):
+        validated_data['user'] = self.context['request'].user
+        
+        return super().create(validated_data)
 
 
 

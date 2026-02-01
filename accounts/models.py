@@ -46,3 +46,13 @@ class User(AbstractUser):
     def __str__(self):
         return self.email
 
+class UserAddress(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="addresses")
+    address = models.TextField()
+    zip_code = models.CharField(max_length=15)
+    
+    def __str__(self):
+        return self.user.email
+    
+    class Meta:
+        ordering = ["id"]
