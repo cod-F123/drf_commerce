@@ -47,9 +47,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'django_filters',
+    
+    # Text Editor
+    'tinymce',
 
     'accounts',
     'shop',
+    'comments',
 ]
 
 MIDDLEWARE = [
@@ -128,14 +132,40 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 
 AUTH_USER_MODEL = 'accounts.User'
+
+
+APPEND_SLASH = False
 
 
 # Rest Config
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ],
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
+
+
+
+
+# DRF E-Commerce
+DRF_ECOMMERCE = {
+    "COMMENTS" : {
+        'MAX_DEPTH' : 3,
+        'ALLOWED_NESTED_REPLY' : True,
+        'USER_CAN_DELETE' : True,
+        'USER_CAN_UPDATE' : True,
+    }
 }
