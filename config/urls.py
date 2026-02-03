@@ -24,7 +24,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('shop/', include('shop.urls')),
     path('comments/', include('comments.urls')),
-    
+    path('orders/', include('orders.urls')),
     
     path('tinymce/', include('tinymce.urls')),
 ]

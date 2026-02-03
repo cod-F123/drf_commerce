@@ -32,8 +32,8 @@ class CreateCommentSerializer(serializers.ModelSerializer):
         max_depth = get_comment_setting('MAX_DEPTH',3)
         allowed_nested_reply = get_comment_setting('ALLOWED_NESTED_REPLY',False)
         
-        if not allowed_nested_reply:
-            raise serializers.ValidationError("Not ALLOWED REPLY !")
+        if not allowed_nested_reply and replyed.depth >= 1 :
+            raise serializers.ValidationError("Not ALLOWED NESTED REPLY !")
         
         if replyed and replyed.depth >= max_depth :
             raise serializers.ValidationError("Maximun Reply DEPTH ERROR !")

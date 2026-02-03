@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'accounts',
     'shop',
     'comments',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -167,5 +168,8 @@ DRF_ECOMMERCE = {
         'ALLOWED_NESTED_REPLY' : True,
         'USER_CAN_DELETE' : True,
         'USER_CAN_UPDATE' : True,
+    },
+    "ORDERS" : {
+        "MAXIMUM_PRODUCT_QUANTITY" : 3,
     }
 }
