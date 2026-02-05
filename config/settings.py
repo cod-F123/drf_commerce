@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'shop',
     'comments',
     'orders',
+    'payment',
 ]
 
 MIDDLEWARE = [
@@ -171,5 +172,12 @@ DRF_ECOMMERCE = {
     },
     "ORDERS" : {
         "MAXIMUM_PRODUCT_QUANTITY" : 3,
+        "USER_CAN_DELETE_ORDER" : True,
+    },
+    "PAYMENT" : {
+        "SUCCESS_URL":"youre.exp/path/",
+        "FAIL_URL" : "youre.exp/path",
+        "CALLBACK_URL" : "https://youredomain.exp/payment/callback-payment/",
+        # Add another settings exp. MERCAHNT_ID for payment getway
     }
 }
