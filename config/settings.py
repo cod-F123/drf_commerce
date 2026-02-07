@@ -48,6 +48,9 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_filters',
     
+    # swagger 
+    'drf_yasg',
+    
     # Text Editor
     'tinymce',
 
@@ -159,6 +162,18 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
+
+# Swagger Conf
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS':{
+        'Bearer' : {
+            'type' : 'apiKey',
+            'name' : 'Authorization',
+            'in' : 'header',
+        }
+    }
+        
+}
 
 
 

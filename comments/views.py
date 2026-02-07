@@ -3,7 +3,7 @@ from rest_framework.generics import CreateAPIView , DestroyAPIView , UpdateAPIVi
 from rest_framework.permissions import IsAuthenticated 
 from .permissions import IsOwnerComment , CanDeletePermission , CanUpdatePermission
 from .models import Comment
-from .serializers import CreateCommentSerializer , UpdateCommentSerilaizer
+from .serializers import CreateCommentSerializer , UpdateCommentSerializer
 from .utils import get_comment_setting
 
 # Create your views here.
@@ -22,5 +22,5 @@ class DeleteCommentApi(DestroyAPIView):
 class UpdateCommentApi(UpdateAPIView):
     queryset = Comment.objects.all()
     permission_classes = [IsAuthenticated, IsOwnerComment, CanUpdatePermission]
-    serializer_class =  UpdateCommentSerilaizer
+    serializer_class =  UpdateCommentSerializer
     lookup_field = "id"

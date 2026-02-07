@@ -32,7 +32,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
         return super().validate(attrs)
     
 
-class OrderSerialzier(serializers.ModelSerializer):
+class OrderSerializer(serializers.ModelSerializer):
     
     items = OrderItemSerializer(many=True)
     order_id = serializers.CharField(read_only = True)
