@@ -1,10 +1,15 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User 
+from .models import User , UserAddress
 from django.utils.translation import gettext_lazy as _
 
 
 # Register your models here.
+
+class UserAddressInlineAdmin(admin.StackedInline):
+    model = UserAddress
+    extra = 1
+    verbose_name_plural = "User Addresses"
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
@@ -43,3 +48,8 @@ class CustomUserAdmin(UserAdmin):
         "groups",
         "user_permissions",
     )
+    inlines = [UserAddressInlineAdmin]
+
+@admin.register(UserAddress)
+class UserAddressAdmin(admin.ModelAdmin):
+    list_display = ["zip_code","user__email"]

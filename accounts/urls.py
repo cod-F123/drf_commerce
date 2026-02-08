@@ -15,4 +15,9 @@ urlpatterns = [
     path('update-username/<str:email>/', views.UpdateUsernameApi.as_view()),
     path('change-password/<str:email>/', views.ChangePasswordUserApi.as_view()),
     path('update-info/<str:email>/', views.UpdateUserInfoApi.as_view()),
+    path('user/<str:email>/', views.UserDetailApi.as_view()),
+    
+    path('address/', views.AddAndListUserAddressApi.as_view()),
+    path('address/<int:id>/', views.DetailAndUpdateAndDeleteUserAddressApi.as_view()),
+    
 ]

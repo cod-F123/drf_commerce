@@ -48,12 +48,17 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_filters',
     
+    # swagger 
+    'drf_yasg',
+    
     # Text Editor
     'tinymce',
 
     'accounts',
     'shop',
     'comments',
+    'orders',
+    'payment',
 ]
 
 MIDDLEWARE = [
@@ -158,6 +163,18 @@ REST_FRAMEWORK = {
 }
 
 
+# Swagger Conf
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS':{
+        'Bearer' : {
+            'type' : 'apiKey',
+            'name' : 'Authorization',
+            'in' : 'header',
+        }
+    }
+        
+}
+
 
 
 # DRF E-Commerce
@@ -167,5 +184,15 @@ DRF_ECOMMERCE = {
         'ALLOWED_NESTED_REPLY' : True,
         'USER_CAN_DELETE' : True,
         'USER_CAN_UPDATE' : True,
+    },
+    "ORDERS" : {
+        "MAXIMUM_PRODUCT_QUANTITY" : 3,
+        "USER_CAN_DELETE_ORDER" : True,
+    },
+    "PAYMENT" : {
+        "SUCCESS_URL":"youre.exp/path/",
+        "FAIL_URL" : "youre.exp/path",
+        "CALLBACK_URL" : "https://youredomain.exp/payment/callback-payment/",
+        # Add another settings exp. MERCAHNT_ID for payment getway
     }
 }

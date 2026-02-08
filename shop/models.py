@@ -33,7 +33,9 @@ class Product(models.Model):
     slug = models.CharField(max_length=255, blank=True, null=True, unique=True)
     date_added = models.DateTimeField(auto_now_add=True)
     
-    price = models.BigIntegerField(default=0)
+    price = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    
+    stock = models.PositiveBigIntegerField(default=0)
     
     
     @property
