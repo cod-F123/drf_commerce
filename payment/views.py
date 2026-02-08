@@ -1,5 +1,6 @@
 from django.shortcuts import render , redirect
-from rest_framework.views import APIView
+from rest_framework.views import APIView 
+from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
@@ -7,6 +8,8 @@ from orders.models import Order
 from .models import Transaction
 from .services.transaction import mark_transaction_success
 from .utils import get_payment_settings
+from .serializers import TransactionSerializer
+
 
 # Create your views here.
 
@@ -97,3 +100,11 @@ class CallbackPaymentGetway(APIView):
         
         
         return redirect(success_url)
+    
+
+class TransactionList(ListAPIView):
+    permission_classes = [IsAuthenticated,]
+    serializer_class = TransactionSerializer
+    
+    def get_queryset(self):
+        return Transaction.objects.filter(order__user__id = self.request.user.id)

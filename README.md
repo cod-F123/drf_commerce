@@ -201,40 +201,46 @@ The project uses SQLite3 by default. To use a different database (PostgreSQL, My
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | `/accounts/register/` | User registration |
-| POST | `/accounts/login/` | User login |
 | POST | `/accounts/token/` | Get JWT token |
-| GET | `/accounts/profile/` | Get user profile |
-| PUT | `/accounts/profile/` | Update user profile |
-| GET | `/accounts/addresses/` | Get user addresses |
-| POST | `/accounts/addresses/` | Create new address |
+| POST | `/accounts/token/refresh/` | Refresh JWT token |
+| GET | `/accounts/user/<email>/` | Get user profile |
+| PUT | `/accounts/update-username/<email>/` | Update user username |
+| POST | `/accounts/change-password/<email>/` | Change password |
+| POST | `/accounts/update-info/<email>/` | update user info | 
+| GET | `/accounts/address/` | Get user addresses |
+| POST | `/accounts/address/` | Create new address |
+| GET | `/accounts/address/<address id>/` | get address by id |
+| PUT | `/accounts/address/<address id>/` | Update address |
+| DELETE | `/accounts/address/<address id>/` | Delete address |
 
 ### Products (Shop)
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/shop/categories/` | List all categories |
-| GET | `/shop/products/` | List all products |
-| GET | `/shop/products/<id>/` | Get product details |
-| GET | `/shop/products/<id>/images/` | Get product images |
+| GET | `/shop/category-list/` | List all categories |
+| GET | `/shop/product-list/` | List all products |
+| GET | `/shop/product/<slug>/` | Get product details |
+
 
 ### Orders
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/orders/` | List user orders |
 | POST | `/orders/` | Create new order |
-| GET | `/orders/<id>/` | Get order details |
-| PUT | `/orders/<id>/` | Update order |
-| GET | `/orders/<id>/items/` | Get order items |
-
+| GET | `/orders/<order id>/` | Get order details |
+| PUT | `/orders/<order id>/` | Update order |
+| DELETE | `/orders/<order id>/` | Delete order |
 ### Payment
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/payment/transaction/` | Create payment transaction |
-| GET | `/payment/transaction/<id>/` | Get transaction status |
+| POST | `/payment/start/` | Create payment transaction |
+| GET | `/payment/callback-payment/` | Callback url |
+| GET | `/payment/list/` | | Get Transaction List |
+
 
 ### Comments
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/comments/product/<id>/` | Get product comments |
+| GET | `/shop/product/<slug>/` | Get product comments |
 | POST | `/comments/` | Create comment |
 | DELETE | `/comments/<id>/` | Delete comment |
 
@@ -255,7 +261,7 @@ The project uses SQLite3 by default. To use a different database (PostgreSQL, My
 
 ### Product (Shop)
 - Individual products
-- Fields: name, category, image, description, price, stock, discount, is_exist, slug, date_added
+- Fields: name, category, image, description, price, stock, percent_off, is_exist, slug, date_added
 - Properties: is_offered, offered_price
 
 ### ProductImage (Shop)
@@ -279,7 +285,7 @@ The project uses SQLite3 by default. To use a different database (PostgreSQL, My
 
 ### Comment
 - Product reviews/comments
-- Fields: user, product, content, rating, created_at
+- Fields: user, product, content, created_at
 
 ---
 
