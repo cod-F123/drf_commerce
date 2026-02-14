@@ -28,9 +28,17 @@ load_dotenv(BASE_DIR/".env")
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG","True")
 
 ALLOWED_HOSTS = []
+for allowed_host in os.getenv("ALLOWED_HOSTS", "").split(","):
+    if allowed_host.strip():
+        ALLOWED_HOSTS.append(allowed_host.strip())
+    
+CSRF_ALLOWED_ORIGINS = []
+for csrf_allowed_origin in os.getenv("CSRF_ALLOWED_ORIGINS", "").split(","):
+    if csrf_allowed_origin.strip():
+        CSRF_ALLOWED_ORIGINS.append(csrf_allowed_origin.strip())
 
 
 # Application definition
@@ -51,6 +59,9 @@ INSTALLED_APPS = [
     # swagger 
     'drf_yasg',
     
+    # Cors Header
+    "corsheaders",
+
     # Text Editor
     'tinymce',
 
@@ -64,6 +75,10 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+
+    # Cors header middleware
+    "corsheaders.middleware.CorsMiddleware",
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -126,7 +141,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = os.getenv("TIME_ZONE","UTC")
 
 USE_I18N = True
 
@@ -162,7 +177,6 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
-
 # Swagger Conf
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS':{
@@ -196,3 +210,13 @@ DRF_ECOMMERCE = {
         # Add another settings exp. MERCAHNT_ID for payment getway
     }
 }
+
+
+
+# # Cors allowed  origin 
+CORS_ALLOWED_ORIGINS = []
+for cors_allowed_origin in os.getenv("CORS_ALLOWED_ORIGINS", "").split(","):
+    if cors_allowed_origin.strip():
+        CORS_ALLOWED_ORIGINS.append(cors_allowed_origin.strip())
+
+CORS_ALLOW_CREDENTIALS = True
