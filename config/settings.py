@@ -35,10 +35,10 @@ for allowed_host in os.getenv("ALLOWED_HOSTS", "").split(","):
     if allowed_host.strip():
         ALLOWED_HOSTS.append(allowed_host.strip())
     
-CSRF_ALLOWED_ORIGINS = []
-for csrf_allowed_origin in os.getenv("CSRF_ALLOWED_ORIGINS", "").split(","):
-    if csrf_allowed_origin.strip():
-        CSRF_ALLOWED_ORIGINS.append(csrf_allowed_origin.strip())
+CSRF_TRUSTED_ORIGINS = []
+for csrf_trusted_origin in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(","):
+    if csrf_trusted_origin.strip():
+        CSRF_TRUSTED_ORIGINS.append(csrf_trusted_origin.strip())
 
 
 # Application definition
