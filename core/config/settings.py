@@ -11,34 +11,27 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
-from dotenv import load_dotenv
-import os 
+from decouple import config
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-load_dotenv(BASE_DIR/".env")
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG","True")
+DEBUG = config("DEBUG", cast=bool)
 
-ALLOWED_HOSTS = []
-for allowed_host in os.getenv("ALLOWED_HOSTS", "").split(","):
-    if allowed_host.strip():
-        ALLOWED_HOSTS.append(allowed_host.strip())
-    
-CSRF_TRUSTED_ORIGINS = []
-for csrf_trusted_origin in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(","):
-    if csrf_trusted_origin.strip():
-        CSRF_TRUSTED_ORIGINS.append(csrf_trusted_origin.strip())
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=lambda hs: [
+                       h.strip() for h in hs.split(",")], default="*")
+
+CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=lambda ctos: [
+                              cto.strip() for cto in ctos.split(",")], default="http://localhost:8000")
 
 
 # Application definition
@@ -55,10 +48,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'django_filters',
-    
-    # swagger 
+
+    # swagger
     'drf_yasg',
-    
+
     # Cors Header
     "corsheaders",
 
@@ -141,7 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = os.getenv("TIME_ZONE","UTC")
+TIME_ZONE = config("TIME_ZONE", default="UTC")
 
 USE_I18N = True
 
@@ -152,10 +145,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -179,41 +172,39 @@ REST_FRAMEWORK = {
 
 # Swagger Conf
 SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS':{
-        'Bearer' : {
-            'type' : 'apiKey',
-            'name' : 'Authorization',
-            'in' : 'header',
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
         }
     }
-        
-}
 
+}
 
 
 # DRF E-Commerce
 DRF_ECOMMERCE = {
-    "COMMENTS" : {
-        'MAX_DEPTH' : 3,
-        'ALLOWED_NESTED_REPLY' : True,
-        'USER_CAN_DELETE' : True,
-        'USER_CAN_UPDATE' : True,
+    "COMMENTS": {
+        'MAX_DEPTH': 3,
+        'ALLOWED_NESTED_REPLY': True,
+        'USER_CAN_DELETE': True,
+        'USER_CAN_UPDATE': True,
     },
-    "ORDERS" : {
-        "MAXIMUM_PRODUCT_QUANTITY" : 3,
-        "USER_CAN_DELETE_ORDER" : True,
+    "ORDERS": {
+        "MAXIMUM_PRODUCT_QUANTITY": 3,
+        "USER_CAN_DELETE_ORDER": True,
     },
-    "PAYMENT" : {
-        "SUCCESS_URL":"youre.exp/path/",
-        "FAIL_URL" : "youre.exp/path",
-        "CALLBACK_URL" : "https://youredomain.exp/payment/callback-payment/",
+    "PAYMENT": {
+        "SUCCESS_URL": "youre.exp/path/",
+        "FAIL_URL": "youre.exp/path",
+        "CALLBACK_URL": "https://youredomain.exp/payment/callback-payment/",
         # Add another settings exp. MERCAHNT_ID for payment getway
     }
 }
 
 
-
-# # Cors allowed  origin 
+# # Cors allowed  origin
 CORS_ALLOWED_ORIGINS = []
 for cors_allowed_origin in os.getenv("CORS_ALLOWED_ORIGINS", "").split(","):
     if cors_allowed_origin.strip():
