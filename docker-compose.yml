@@ -1,5 +1,15 @@
-version: '1'
 services:
+
+  db:
+    image: postgres:18
+    container_name: postgres-dev
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
   core:
     build: .
     container_name: core
@@ -14,3 +24,9 @@ services:
       - .env
 
     command: python manage.py runserver 0.0.0.0:8000
+
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
