@@ -206,7 +206,7 @@ DRF_ECOMMERCE = {
 
 # # Cors allowed  origin
 CORS_ALLOWED_ORIGINS = []
-for cors_allowed_origin in os.getenv("CORS_ALLOWED_ORIGINS", "").split(","):
+for cors_allowed_origin in config("CORS_ALLOWED_ORIGINS").split(","):
     if cors_allowed_origin.strip():
         CORS_ALLOWED_ORIGINS.append(cors_allowed_origin.strip())
 
